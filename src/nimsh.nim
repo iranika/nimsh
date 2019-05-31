@@ -2,7 +2,7 @@
 # uses this file as the main entry point of the application.
 
 import os, osproc, rdstdin, strformat, strutils, terminal, times, strformat
-
+import posix
 
 proc lsh_read_line(): string =
   result = readLineFromStdin(">").strip
@@ -13,18 +13,21 @@ proc lsh_split_line(line: string): seq[string] =
   result = line.split(LSH_TOK_SEPS)
 
 proc lsh_cd(args: seq[string]): int =
-  echo "cd is builtin command."
-  echo "args :" & $args
-  return 1
+  if args.len == 1:
+    stderr.write("lsh: expected argument to \"cd\"\n")
+  else:
+    if chdir(args[1]) != 0:
+      stderr.write("lsh: argument is invalid.\n")
+  return 0
 
 proc lsh_ls(args: seq[string]): int =
   echo "ls is builtin command."
   echo "args :" & $args
-  return 1
+  return 0
 
 proc lsh_exit(args: seq[string]): int =
   echo "Good bye"
-  return 0
+  return -1
 
 type builtin_command = object
   name: string
@@ -49,16 +52,10 @@ proc runForever() =
   var args: seq[string]
   var status: int
 
-  while (status == 1):
+  while (status == 0):
     line = lsh_read_line()
     args = lsh_split_line(line)
     status = lsh_execute(args)
-
-
-
-
-
-
 
 
 proc init() = 
