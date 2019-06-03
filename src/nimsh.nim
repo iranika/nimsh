@@ -73,7 +73,8 @@ proc runForever() =
     status = lsh_execute(args)
 
 proc init() = 
-  stdout.writeLine("Wellcome to nimsh! 🍣")
+  stdout.writeLine("Welcome to nimsh! 🍣")
+  
   return
 
 proc main() =
