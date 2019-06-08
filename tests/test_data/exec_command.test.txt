@@ -1,0 +1,4 @@
+echo "hoge"
+uname -p
+#not command syntax
+exit

@@ -1,0 +1,5 @@
+Welcome to nimsh! 🍣
+"hoge"
+i386
+command execute error.
+Good bye
